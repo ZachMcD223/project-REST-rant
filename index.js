@@ -4,7 +4,6 @@ const app = express()
 
 app.use('/places', require('./controllers/places'))
 
-
 app.use(express.json())
 
 
