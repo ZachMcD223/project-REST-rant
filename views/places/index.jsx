@@ -1,6 +1,6 @@
-// GET /places
+
+const Def = require("../default")
 const React = require('react')
-const Def = require('../default')
 
 
       function index (data) {
@@ -21,18 +21,7 @@ const Def = require('../default')
           </Def>
       )
       }
-      let places = [{
-        name: 'H-Thai-ML',
-        city: 'Seattle',
-        state: 'WA',
-        cuisines: 'Thai, Pan-Asian',
-        pic: 'http://placekitten.com/250/250'
-      }, {
-        name: 'Coding Cat Cafe',
-        city: 'Phoenix',
-        state: 'AZ',
-        cuisines: 'Coffee, Bakery',
-        pic: 'http://placekitten.com/250/250'
-      }]})
-      res.render('places/index', { places })
+      
+      
+    
       module.exports = index
