@@ -39,16 +39,4 @@ function new_form () {
     )
 }
 
-router.get('/new', (req, res) => {
-  res.render('places/new')
-})
-  
-const router = require('express').Router()
-
-router.get('/', (req, res) => {
-    res.send('GET /places')
-})
-
-module.exports = router
-
 module.exports = new_form
