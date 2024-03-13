@@ -18,7 +18,7 @@ nav li {
 }
 
 nav a {
-    color: white;
+    color: rgb(193, 81, 81);
     font-size: 1.5em;
 }
 
@@ -35,6 +35,6 @@ body {
   main {
     margin-right: 20px;
     margin-left: 20px;
-    background-color: white;
+    background-color: rgb(193, 81, 81);
   }
   

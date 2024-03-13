@@ -3,9 +3,6 @@ const places = require('../models/places')
 
 
 
-
-
-
 router.get('/', (req, res) => {
   res.render('places/index', { places })
 })
@@ -22,7 +19,7 @@ router.get('/:id', (req, res) => {
     res.render('error404')
   }
   else {
-    res.render('places/show', {place: places[id] })
+    res.render('places/show', {place: places[id], id })
   }
 })
 
