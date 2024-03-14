@@ -19,9 +19,11 @@ router.get('/:id', (req, res) => {
     res.render('error404')
   }
   else {
-    res.render('places/show', {place: places[id], id })
+    res.render('places/show', { place: places[id] })
   }
 })
+
+
 
 
 router.get('/', (req, res) => {
@@ -31,7 +33,6 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   
-
   if (!req.body.pic) {
     req.body.pic = 'http://placekitten.com/400/400'
   }
@@ -45,5 +46,18 @@ router.post('/', (req, res) => {
   res.redirect('/places')
 })
 
+router.delete('/:id', (req, res) => {
+  let id = Number(req.params.id)
+  if (isNaN(id)) {
+    res.render('error404')
+  }
+  else if (!places[id]) {
+    res.render('error404')
+  }
+  else {
+    places.splice(id, 1)
+    res.redirect('/places')
+  }
+})
 
 module.exports = router

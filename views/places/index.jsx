@@ -4,7 +4,7 @@ const React = require('react')
 
 
       function index (data) {
-        let placesFormatted = data.places.map((place) => {
+        let placesFormatted = data.places.map((place, index) => {
           return (
             <div className="col-sm-6">
               <h2>
