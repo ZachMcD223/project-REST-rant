@@ -6,18 +6,18 @@ function show (data) {
         <Def>
           <main>
             <h1>{ data.place.name }</h1>
-            <li>
-            <a href={`/places/${data.id}/edit`} className="btn btn-warning"> 
-  Edit
+            <img src={ data.place.pic} alt={data.place.name} />
+          <a href={`/places/${data.place.id}/edit`} className="btn btn-warning"> 
+  Edit <i className="fa-solid fa-pencil"></i>
 </a>     
 
-<form method="POST" action={`/places/${data.id}?_method=DELETE` }> 
+<form method="POST" action={`/places/${data.place.id}?_method=DELETE` }> 
   <button type="submit" className="btn btn-danger">
-    Delete
+    Delete <i className="fa-solid fa-trash"></i>
   </button>
 </form>     
 
-            </li>
+           
           </main>
         </Def>
     )

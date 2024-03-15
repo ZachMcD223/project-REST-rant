@@ -7,43 +7,8 @@ router.get('/', async (req, res) => {
   const places = await db.Place.find()
   res.render('places/index', { places })
 })
-router.get('/new', (req, res) => {
-  res.render('places/new')
-})
 
-router.get('/:id', (req, res) => {
-  let id = Number(req.params.id)
-  if (isNaN(id)) {
-    res.render('error404')
-  }
-  else if (!places[id]) {
-    res.render('error404')
-  }
-  else {
-    res.render('places/show', { place: places[id] })
-  }
-})
-
-router.get('/:id/edit', (req, res) => {
-  let id = Number(req.params.id)
-  if (isNaN(id)) {
-      res.render('error404')
-  }
-  else if (!places[id]) {
-      res.render('error404')
-  }
-  else {
-    res.render('places/edit', { place: places[id], id })
-  }
-})
-
-
-router.get('/', (req, res) => {
-  res.send('GET /places')
-})
-
-
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   
   if (!req.body.pic) {
     req.body.pic = 'http://placekitten.com/400/400'
@@ -54,25 +19,54 @@ router.post('/', (req, res) => {
   if (!req.body.state) {
     req.body.state = 'USA'
   }
-  places.push(req.body)
+  await db.Place.create(req.body)
   res.redirect('/places')
 })
 
-router.delete('/:id', (req, res) => {
-  const { index } = req.params
-  places.splice(index, 1)
-  res.redirect('/places')
+router.get('/new', (req, res) => {
+  res.render('places/new')
 })
 
-router.put('/:id', (req, res) => {
-  let id = Number(req.params.id)
-  if (isNaN(id)) {
-      res.render('error404')
-  }
-  else if (!places[id]) {
-      res.render('error404')
+router.get('/:id', async (req, res) => {
+  let id = req.params.id
+  
+   if (!id) {
+    res.render('error404')
   }
   else {
+   const place= await db.Place.findOne({_id: id})
+    res.render('places/show', { place })
+  }
+})
+
+router.get('/:id/edit',  (req, res) => {
+  // let id = req.params.id
+ 
+  //  if (!id) {
+  //     res.render('error404')
+  // }
+  
+  
+  // else { 
+  //   const place= await db.Place.findById(id)
+  //   res.render('places/edit', { place })
+  // }
+ db.Place.findById(req.params.id)
+    .then((place) => {
+      res.render("places/edit", { place });
+    })
+    .catch((err) => {
+      console.log("err", err);
+      res.render("error404");
+    });
+})
+
+router.put('/:id', async (req, res) => {
+  let id = req.params.id
+  // if (!id) {
+//       res.render('error404')
+//   }
+//   else {
       
       if (!req.body.pic) {
               req.body.pic = 'http://placekitten.com/400/400'
@@ -83,10 +77,20 @@ router.put('/:id', (req, res) => {
       if (!req.body.state) {
           req.body.state = 'USA'
       }
-      places[id] = req.body
+      await db.Place.findByIdAndUpdate(id, req.body)
       res.redirect(`/places/${id}`)
-  }
+  //}
 })
+
+
+
+router.delete('/:id', async (req, res) => {
+  let id = req.params.id
+  await db.Place.findByIdAndDelete(id)
+  res.redirect('/places')
+})
+
+
 
 
 module.exports = router
