@@ -1,9 +1,10 @@
 const router = require('express').Router()
-const places = require('../models/places')
+const db = require('../models/index')
 
 
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  const places = await db.Place.find()
   res.render('places/index', { places })
 })
 router.get('/new', (req, res) => {
@@ -32,7 +33,7 @@ router.get('/:id/edit', (req, res) => {
       res.render('error404')
   }
   else {
-    res.render('places/edit', { place: places[id] })
+    res.render('places/edit', { place: places[id], id })
   }
 })
 
@@ -57,7 +58,7 @@ router.post('/', (req, res) => {
   res.redirect('/places')
 })
 
-router.delete('/:index', (req, res) => {
+router.delete('/:id', (req, res) => {
   const { index } = req.params
   places.splice(index, 1)
   res.redirect('/places')
