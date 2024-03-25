@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const db = require('../models/index')
+const db = require('../models')
 
 
 
@@ -39,18 +39,18 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.get('/:id/edit',  (req, res) => {
-  // let id = req.params.id
+router.get('/:id/edit',  async (req, res) => {
+   let id = req.params.id
  
-  //  if (!id) {
-  //     res.render('error404')
-  // }
+    if (!id) {
+      res.render('error404')
+   }
   
   
-  // else { 
-  //   const place= await db.Place.findById(id)
-  //   res.render('places/edit', { place })
-  // }
+ else { 
+   const place= await db.Place.findById(id)
+    res.render('places/edit', { place })
+  }
  db.Place.findById(req.params.id)
     .then((place) => {
       res.render("places/edit", { place });
@@ -63,10 +63,10 @@ router.get('/:id/edit',  (req, res) => {
 
 router.put('/:id', async (req, res) => {
   let id = req.params.id
-  // if (!id) {
-//       res.render('error404')
-//   }
-//   else {
+ // if (!id) {rs
+ //   res.render('error404')
+//  }
+ //    else {
       
       if (!req.body.pic) {
               req.body.pic = 'http://placekitten.com/400/400'
@@ -79,7 +79,7 @@ router.put('/:id', async (req, res) => {
       }
       await db.Place.findByIdAndUpdate(id, req.body)
       res.redirect(`/places/${id}`)
-  //}
+ // }
 })
 
 
