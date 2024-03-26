@@ -34,6 +34,9 @@ function new_form (data) {
           <a href={`/places/${data.place.id}/edit`} className="btn btn-warning"> 
   Edit <i className="fa-solid fa-pencil"></i>
 </a>     
+<a href={`/places/${data.place.id}/comment`} className="btn btn-warning"> 
+  Comment <i className="fa-solid fa-pencil"></i>
+</a>     
 
 <form method="POST" action={`/places/${data.place.id}?_method=DELETE` }> 
   <button type="submit" className="btn btn-danger">

@@ -33,17 +33,19 @@ router.get('/new', (req, res) => {
   res.render('places/new')
 })
 
-router.get('/:id', async (req, res) => {
-  let id = req.params.id
-  
-   if (!id) {
-    res.render('error404')
-  }
-  else {
-   const place= await db.Place.findOne({_id: id})
+router.get('/:id', (req, res) => {
+  db.Place.findById(req.params.id)
+  .populate('comments')
+  .then (place => {
+    console.log(place.comments)
     res.render('places/show', { place })
-  }
-})
+  })
+    .catch(err => {
+      console.log('err', err)
+      res.render('error404')
+    })
+  })
+
 
 router.get('/:id/edit',  async (req, res) => {
    let id = req.params.id
@@ -66,6 +68,28 @@ router.get('/:id/edit',  async (req, res) => {
       res.render("error404");
     });
 })
+
+router.post('/:id/comment', (req, res) => {
+  console.log(req.body)
+  db.Place.findById(req.params.id)
+  .then(place => {
+      db.Comment.create(req.body)
+      .then(comment => {
+          place.comments.push(comment.id)
+          place.save()
+          .then(() => {
+              res.redirect(`/places/${req.params.id}`)
+          })
+      })
+      .catch(err => {
+          res.render('error404')
+      })
+  })
+  .catch(err => {
+      res.render('error404')
+  })
+})
+
 
 router.put('/:id', async (req, res) => {
   let id = req.params.id

@@ -36,8 +36,9 @@ body {
     margin-right: 20px;
     margin-left: 20px;
     background-color: rgb(193, 81, 81);
-   
+   height: 800px;
   }
   
   img
-  {width:500px}
+  {width:700px;
+align-content:center;}
